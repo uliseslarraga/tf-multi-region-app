@@ -1,5 +1,5 @@
 module "ingress_vpc" {
-    source = "../../../modules/vpc"
+    source = "../../../../modules/vpc"
     
     region            = var.region
     vpc_name          = "ingress"

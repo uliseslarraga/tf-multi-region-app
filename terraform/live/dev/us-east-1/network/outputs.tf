@@ -1,23 +1,11 @@
-output "ingress_vpc" {
-  value = module.ingress_vpc.vpc_id
-}
-
-output "ingress_subnets" {
-  value = module.ingress_vpc.subnet_ids
-}
-
-output "app_vpc" {
-  value = module.app_vpc.vpc_id
+output "main_vpc" {
+  value = module.main_vpc.vpc_id
 }
 
 output "app_subnets" {
-  value = module.app_vpc.subnet_ids
-}
-
-output "data_vpc" {
-  value = module.data_vpc.vpc_id
+  value = module.main_vpc.app_subnet_ids
 }
 
 output "data_subnets" {
-    value = module.data_vpc.subnet_ids
+    value = module.main_vpc.data_subnet_ids
 }

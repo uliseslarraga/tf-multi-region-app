@@ -3,6 +3,11 @@ output "main_vpc" {
   value       = module.main_vpc.vpc_id
 }
 
+output "ingress_subnets" {
+  description = "Subnet IDs for the Ingress tier, one per AZ (a/b/c)"
+  value       = module.main_vpc.ingress_subnet_ids
+}
+
 output "app_subnets" {
   description = "Subnet IDs for the App tier, one per AZ (a/b/c)"
   value       = module.main_vpc.app_subnet_ids

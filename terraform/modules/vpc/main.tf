@@ -12,7 +12,7 @@ resource "aws_subnet" "ingress" {
   cidr_block        = cidrsubnet(var.cidr_block, 4, count.index)
   availability_zone = "${var.region}${element(["a", "b", "c"], count.index)}"
 
-  tags = merge(var.tags, { Name = "${var.vpc_name}-ingress-${count.index}" })
+  tags = merge(var.tags, { Name = "${var.vpc_name}-ingress-subnet-${element(["a", "b", "c"], count.index)}" })
   
 }
 
@@ -23,7 +23,7 @@ resource "aws_subnet" "app" {
   cidr_block        = cidrsubnet(var.cidr_block, 4, var.az_subnets_number+count.index)
   availability_zone = "${var.region}${element(["a", "b", "c"], count.index)}"
 
-  tags = merge(var.tags, { Name = "${var.vpc_name}-app-${count.index}" })
+  tags = merge(var.tags, { Name = "${var.vpc_name}-app-subnet-${element(["a", "b", "c"], count.index)}" })
   
 }
 
@@ -34,6 +34,6 @@ resource "aws_subnet" "data" {
   cidr_block        = cidrsubnet(var.cidr_block, 4, (var.az_subnets_number*2) + count.index)
   availability_zone = "${var.region}${element(["a", "b", "c"], count.index)}"
 
-  tags = merge(var.tags, { Name = "${var.vpc_name}-data-${count.index}" })
+  tags = merge(var.tags, { Name = "${var.vpc_name}-data-subnet-${element(["a", "b", "c"], count.index)}" })
   
 }

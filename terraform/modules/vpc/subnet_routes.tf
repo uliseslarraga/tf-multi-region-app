@@ -1,13 +1,16 @@
 resource "aws_route_table" "ingress" {
   vpc_id = aws_vpc.this.id
+  tags   = merge(var.tags, { Name = "${var.vpc_name}-ingress-rt" })
 }
 
 resource "aws_route_table" "app" {
   vpc_id = aws_vpc.this.id
+  tags   = merge(var.tags, { Name = "${var.vpc_name}-app-rt" })
 }
 
 resource "aws_route_table" "data" {
   vpc_id = aws_vpc.this.id
+  tags   = merge(var.tags, { Name = "${var.vpc_name}-data-rt" })
 }
 
 #Route tables associaton for subnets

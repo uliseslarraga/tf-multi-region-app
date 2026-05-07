@@ -146,3 +146,41 @@ variable "common_tags" {
 Outputs follow this convention:
 - Always output the primary resource ID and ARN
 - Output anything a sibling module might need as an input (e.g. `target_group_arn` from `modules/alb`)
+
+### CIDR allocation
+
+CIDRs are computed dynamically using `cidrsubnet` — never hardcode IP ranges.
+
+#### VPC per region
+Each region gets a `/16` slice from the root supernet using a region index:
+
+```hcl
+cidr_block = cidrsubnet(var.cidr, 2, <region_index>)
+```
+
+| Region | Index | Resulting VPC CIDR |
+|---|---|---|
+| us-east-1 | 0 | 10.0.0.0/16 |
+| us-west-2 | 1 | 10.1.0.0/16 |
+
+The root supernet variable (`var.cidr`) is passed into the network root module via `terraform.tfvars`.
+
+#### Subnets per tier
+Each VPC is divided into 3 tiers × 3 AZs using `/20` blocks. `var.az_subnets_number = 3`.
+
+```hcl
+# Ingress — slots 0, 1, 2
+cidrsubnet(var.cidr_block, 4, count.index)
+
+# App — slots 3, 4, 5
+cidrsubnet(var.cidr_block, 4, var.az_subnets_number + count.index)
+
+# Data — slots 6, 7, 8
+cidrsubnet(var.cidr_block, 4, (var.az_subnets_number * 2) + count.index)
+```
+
+#### Rules
+- Always use `cidrsubnet` — never replace with hardcoded CIDR strings
+- Never change the offset formula without updating all regions consistently
+- `var.az_subnets_number` must always equal the number of AZs (currently 3)
+- Adding a new region = increment the region index, never reuse an existing one

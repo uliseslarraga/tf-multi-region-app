@@ -56,10 +56,6 @@ The `live/dev/{region}/network/` directories are each a self-contained Terraform
 | `variables.tf`, `terraform.tfvars` | Region-specific parameterization |
 | `outputs.tf` | VPC/subnet IDs for consumption by future layers |
 
-### CIDR allocation
-
-- **us-east-1**: 10.0.0.0/14 → App: 10.0.0.0/16, Data: 10.1.0.0/16, Ingress: 10.2.0.0/16
-- **us-west-2**: 10.4.0.0/14 → App: 10.4.0.0/16, Data: 10.5.0.0/16, Ingress: 10.6.0.0/16
 
 ### Traffic flow
 - Ingress ↔ App (bidirectional)
@@ -90,6 +86,7 @@ Outputs exposed by `live/dev/{region}/network/outputs.tf` for consumption by dow
 | Output key | Type | Description |
 |---|---|---|
 | `main_vpc` | `string` | VPC ID of the single regional VPC |
+| `ingress_subnets` | `list(string)` | Subnet IDs for the Ingress tier (one per AZ) |
 | `app_subnets` | `list(string)` | Subnet IDs for the App tier (one per AZ) |
 | `data_subnets` | `list(string)` | Subnet IDs for the Data tier (one per AZ) |
 

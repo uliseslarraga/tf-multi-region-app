@@ -1,5 +1,6 @@
 terraform {
   backend "s3" {
+    profile        = "default"
     bucket         = "tf-backend-bucket-culr-03-2026"
     key            = "live/dev/us-east-1/network/terraform.tfstate"
     region         = "us-east-1"

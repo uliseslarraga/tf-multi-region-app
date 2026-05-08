@@ -15,10 +15,10 @@ aws cloudformation create-stack --stack-name tf-state-stack --template-body file
 
 ### Terraform workflow (run from within each root module directory)
 ```bash
-terraform -chdir=terraform/live/dev/us-east-1/network init
-terraform -chdir=terraform/live/dev/us-east-1/network plan
-terraform -chdir=terraform/live/dev/us-east-1/network apply
-terraform -chdir=terraform/live/dev/us-east-1/network destroy
+terraform -chdir=terraform/live/dev/us-east-1/{layer} init
+terraform -chdir=terraform/live/dev/us-east-1/{layer} plan
+terraform -chdir=terraform/live/dev/us-east-1/{layer} apply
+terraform -chdir=terraform/live/dev/us-east-1/{layer} destroy
 ```
 
 Each region's network stack is an independent root module — `init`/`plan`/`apply` must be run separately per region.
@@ -39,10 +39,20 @@ terraform/
 
 ## Architecture
 
+### App Architecture
+Vault app that saves screenshots of web pages and its url
+The app has a frontend page that requires an NGINX server and a backend midleware written in python, each app needs to run on a separate VM, so we need an internal ALB for backend autoscaling group and a public ALB for frontend App, both apps are stateless and save links and metadatada in a postgres database and an object repository storage like AWS s3.  
+
+### CIDR allocation
+CIDRs are computed dynamically via `cidrsubnet`. 
+The root supernet per region is passed via `var.cidr` in `terraform.tfvars`.
+See SKILL.md for the exact formula and rules.
+
 ### Layer hierarchy 
 1.- Networking
-2.- Database and storage resources 
-3.- Compute
+2.- Database 
+3.- Storage resources (S3,ebs,efs,etc) 
+4.- Compute
 
 ### Layer separation
 

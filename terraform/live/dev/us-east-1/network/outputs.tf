@@ -1,23 +1,19 @@
-output "ingress_vpc" {
-  value = module.ingress_vpc.vpc_id
+output "main_vpc" {
+  description = "ID of the single regional VPC"
+  value       = module.main_vpc.vpc_id
 }
 
 output "ingress_subnets" {
-  value = module.ingress_vpc.subnet_ids
-}
-
-output "app_vpc" {
-  value = module.app_vpc.vpc_id
+  description = "Subnet IDs for the Ingress tier, one per AZ (a/b/c)"
+  value       = module.main_vpc.ingress_subnet_ids
 }
 
 output "app_subnets" {
-  value = module.app_vpc.subnet_ids
-}
-
-output "data_vpc" {
-  value = module.data_vpc.vpc_id
+  description = "Subnet IDs for the App tier, one per AZ (a/b/c)"
+  value       = module.main_vpc.app_subnet_ids
 }
 
 output "data_subnets" {
-    value = module.data_vpc.subnet_ids
+  description = "Subnet IDs for the Data tier, one per AZ (a/b/c)"
+  value       = module.main_vpc.data_subnet_ids
 }

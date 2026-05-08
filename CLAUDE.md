@@ -82,6 +82,8 @@ S3 backend with state locking (`use_lockfile = true`). Each root module has its 
 
 Bucket: `tf-backend-bucket-culr-03-2026`
 
+S3 buckets live in the account with default profile
+
 ## Conventions
 
 - Each new region or environment gets its own root module directory under `live/{env}/{region}/{layer}/`.
@@ -116,3 +118,8 @@ data "terraform_remote_state" "network" {
 vpc_id     = data.terraform_remote_state.network.outputs.main_vpc
 subnet_ids = data.terraform_remote_state.network.outputs.app_subnets
 ```
+
+## Accounts
+There are 2 accounts
+account profile aws-lab: it is used to create al infra (networking, compute, databases, ebs)
+account profile default: it is used to create s3 buckets only (backend and vault app bucket)

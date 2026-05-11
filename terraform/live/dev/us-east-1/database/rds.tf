@@ -23,5 +23,7 @@ module "rds" {
   username               = var.db_username
   password               = random_password.db.result
   instance_class         = var.instance_class
-common_tags            = local.common_tags
+  is_failover            = var.is_failover
+  source_db_arn          = var.source_db_arn
+  common_tags            = local.common_tags
 }

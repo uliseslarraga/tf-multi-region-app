@@ -25,6 +25,18 @@ variable "db_username" {
 
 variable "instance_class" {
   type        = string
-  description = "Instance class for the primary RDS instance"
+  description = "Instance class for the RDS instance"
   default     = "db.t3.micro"
+}
+
+variable "is_failover" {
+  type        = bool
+  description = "When true, creates the DB as a cross-region read replica for DR"
+  default     = false
+}
+
+variable "source_db_arn" {
+  type        = string
+  description = "ARN of the primary RDS instance to replicate from; required when is_failover = true"
+  default     = ""
 }

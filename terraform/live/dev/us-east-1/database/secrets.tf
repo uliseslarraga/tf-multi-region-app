@@ -13,8 +13,8 @@ resource "aws_secretsmanager_secret_version" "db" {
   secret_string = jsonencode({
     username = var.db_username
     password = random_password.db.result
-    host     = module.rds.primary_address
-    port     = module.rds.primary_port
+    host     = module.rds.address
+    port     = module.rds.port
     dbname   = var.db_name
   })
 }

@@ -1,26 +1,26 @@
-output "primary_instance_id" {
-  description = "Identifier of the primary RDS instance"
-  value       = aws_db_instance.primary.identifier
+output "instance_id" {
+  description = "Identifier of the RDS instance"
+  value       = aws_db_instance.this.identifier
 }
 
-output "primary_instance_arn" {
-  description = "ARN of the primary RDS instance"
-  value       = aws_db_instance.primary.arn
+output "instance_arn" {
+  description = "ARN of the RDS instance"
+  value       = aws_db_instance.this.arn
 }
 
-output "primary_endpoint" {
-  description = "Connection endpoint for the primary RDS instance (host:port)"
-  value       = aws_db_instance.primary.endpoint
+output "endpoint" {
+  description = "Connection endpoint (host:port)"
+  value       = aws_db_instance.this.endpoint
 }
 
-output "primary_address" {
-  description = "Hostname of the primary RDS instance"
-  value       = aws_db_instance.primary.address
+output "address" {
+  description = "Hostname of the RDS instance"
+  value       = aws_db_instance.this.address
 }
 
-output "primary_port" {
-  description = "Port the primary RDS instance listens on"
-  value       = aws_db_instance.primary.port
+output "port" {
+  description = "Port the RDS instance listens on"
+  value       = aws_db_instance.this.port
 }
 
 output "db_subnet_group_name" {

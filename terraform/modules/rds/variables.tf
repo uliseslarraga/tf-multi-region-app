@@ -89,6 +89,18 @@ variable "skip_final_snapshot" {
   default     = true
 }
 
+variable "is_failover" {
+  type        = bool
+  description = "When true, the instance is created as a cross-region read replica of source_db_arn (DR mode)"
+  default     = false
+}
+
+variable "source_db_arn" {
+  type        = string
+  description = "ARN of the primary DB instance to replicate from; required when is_failover = true"
+  default     = ""
+}
+
 variable "common_tags" {
   type        = map(string)
   description = "Common tags applied to all resources in this module"
